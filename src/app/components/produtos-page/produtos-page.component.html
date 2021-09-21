@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Novo +</a>
+          <button class="btn btn-info" (click)="triggerModal(modalData)">Novo Produto</button>
         </li>
         </ul>
         </div>
@@ -42,6 +42,44 @@
     </tbody>
   </table>
 </div>
+
+<ng-template #modalData let-modal>
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Formulário de Novo Produto</h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')"> X </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="createProduto"  (ngSubmit)="postCreateProduto()" >
+
+      <div class="mb-3">
+        <label class="form-label">Nome:</label>
+        <input type="text" class="form-control" formControlName="nome">
+        <!-- <div class="form-text">We'll never share your email with anyone else.</div> -->
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Quantidade:</label>
+        <input type="number" class="form-control"  formControlName="quantidade">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Valor:</label>
+        <input type="text" class="form-control"  formControlName="valor">
+      </div>
+
+
+      <button type="submit" [disabled]='createProduto.invalid' class="btn btn-primary">Salvar</button>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')"> X </button>
+  </div>
+</ng-template>
 
 
 

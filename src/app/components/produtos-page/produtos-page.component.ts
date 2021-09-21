@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutosService } from 'src/app/services/produtos.service';
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-produtos-page',
@@ -8,8 +11,19 @@ import { ProdutosService } from 'src/app/services/produtos.service';
 })
 export class ProdutosPageComponent implements OnInit {
   listaDeProdutos: any;
+  closeModal: any;
 
-  constructor(private produtosService: ProdutosService) {}
+  createProduto = new FormGroup( {
+
+    nome: new FormControl('', [Validators.required]),
+    quantidade: new FormControl('', [Validators.required]),
+    valor: new FormControl('', [Validators.required])
+
+  });
+
+
+  constructor(private produtosService: ProdutosService,
+              private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.pegarProdutos();
@@ -25,5 +39,44 @@ export class ProdutosPageComponent implements OnInit {
     this.produtosService.pegarProdutoPorId(id).subscribe((resultado) => {
       console.log('resultado da API :', resultado);
     });
+  }
+
+  postCreateProduto(){
+    this.produtosService.postCreateProduto(this.createProduto.value).subscribe((resultado) => {
+      console.log('Retorno da API :', resultado );
+      this.pegarProdutos();
+      this.modalService.dismissAll();
+      this.createProduto = new FormGroup( {
+
+        nome: new FormControl('', [Validators.required]),
+        quantidade: new FormControl('', [Validators.required]),
+        valor: new FormControl('', [Validators.required])
+
+      });
+
+    })
+
+  }
+
+
+
+
+
+  triggerModal(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
+      this.closeModal = `Closed with: ${res}`;
+    }, (res) => {
+      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 }
