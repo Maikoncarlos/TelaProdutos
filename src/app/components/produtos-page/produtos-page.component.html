@@ -1,20 +1,47 @@
-<p>Lista de Produtos!</p>
-<table style="width:100%">
-  <tr>
-    <th>Id</th>
-    <th>Nome</th>
-    <th>Quantidade</th>
-    <th>Valor</th>
-    <th>opções</th>
-  </tr>
-  <tr *ngFor="let item of listaDeProdutos">
-    <td> {{item.id}}</td>
-    <td> {{item.nome}}</td>
-    <td> {{item.quantidade}}</td>
-    <td> {{item.valor}}</td>
-    <td><button (click)="pegarProdutoPorId(item.id)">selecionar</button></td>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">Produtos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+     aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> &nbsp;
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Novo +</a>
+        </li>
+        </ul>
+        </div>
+      </div>
+    </nav>
 
-  </tr>
+<div class="table-list">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Quantidade</th>
+        <th>Valor</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listaDeProdutos">
+        <td> {{item.id}}</td>
+      <td> {{item.nome}}</td>
+      <td> {{item.quantidade}}</td>
+      <td> {{item.valor}}</td>
+      <td>
+        <button type="button" class="btn btn-primary">Primary</button> &nbsp;
+        <button type="button" class="btn btn-danger">Danger</button>
+     </td>
+      </tr>
 
-</table>
+    </tbody>
+  </table>
+</div>
+
+
 

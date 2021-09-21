@@ -1,3 +1,15 @@
-table, th, td {
-  border:1px solid black;
+
+.table-list{
+  background: rgb(228, 222, 222);
+  width: auto;
+  margin: 1%;
+}
+
+.table tbody tr{
+  background: rgb(207, 198, 198);
+}
+
+.table tbody tr:hover{
+  background: rgb(153, 145, 145);
+ color: white;
 }
