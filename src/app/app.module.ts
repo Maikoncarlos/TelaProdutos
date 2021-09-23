@@ -8,13 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { AlertComponent } from './components/alert/alert.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProdutosPageComponent
+    ProdutosPageComponent,
+    AlertComponent
   ],
 
   imports: [

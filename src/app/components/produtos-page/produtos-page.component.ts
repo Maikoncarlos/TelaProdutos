@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProdutosService } from 'src/app/services/produtos.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
+import { AlertComponent } from '../alert/alert.component';
+
 
 @Component({
   selector: 'app-produtos-page',
@@ -24,7 +25,8 @@ export class ProdutosPageComponent implements OnInit {
 
   constructor(
     private produtosService: ProdutosService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private alertComponent: AlertComponent
   ) {}
 
   ngOnInit(): void {
@@ -48,14 +50,7 @@ export class ProdutosPageComponent implements OnInit {
         this.pegarProdutos();
         this.modalService.dismissAll();
 
-
-        Swal.fire({
-          icon: 'success',
-          title: 'O produto '+this.createProduto.value.nome+' foi criado com sucesso!',
-          showConfirmButton: false,
-          timer: 2000
-        })
-
+        this.alertComponent.alertTimer('success', 'O produto '+this.createProduto.value.nome+' foi criado com sucesso!' );
 
         this.createProduto = new FormGroup({
           nome: new FormControl('', [Validators.required]),
@@ -79,6 +74,7 @@ export class ProdutosPageComponent implements OnInit {
       this.produtosService.deleteProduto(this.infoDeleteProduto).subscribe((resultado) => {
         this.pegarProdutos();
         this.modalService.dismissAll();
+        this.alertComponent.alertTimer('success', 'O produto '+this.infoDeleteProduto.nome+' foi deletado com sucesso!' );
       })
   }
 
