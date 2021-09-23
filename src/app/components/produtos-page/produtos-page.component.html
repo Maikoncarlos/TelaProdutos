@@ -35,13 +35,15 @@
       <td> {{item.valor}}</td>
       <td>
         <button type="button" class="btn btn-primary">Editar</button> &nbsp;
-        <button type="button" class="btn btn-danger" (click)="deleteProduto(item)">Excluir</button>
+        <button type="button" class="btn btn-danger" (click)="deleteProduto(item, modalDeletarProduto)">Excluir</button> <!-- item.id  -->
      </td>
       </tr>
 
     </tbody>
   </table>
 </div>
+
+<!-- formulario para criar produto -->
 
 <ng-template #modalData let-modal>
 
@@ -79,5 +81,26 @@
   </div>
 </ng-template>
 
+
+
+
+<!-- deletar produto -->
+
+<ng-template #modalDeletarProduto let-modal>
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Atenção!!!</h4>
+  </div>
+
+
+  <div class="modal-body">
+    <h4 class="modal-title" id="modal-basic-title">Realmente deseja excluir: {{infoDeleteProduto.nome}} ?</h4>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteconfirmado()"> Sim </button>
+    <button type="button" class="btn btn-info" (click)="modal.close('Save click')"> Não </button>
+  </div>
+</ng-template>
 
 

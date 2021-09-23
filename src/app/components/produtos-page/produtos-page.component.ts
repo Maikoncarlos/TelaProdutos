@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutosService } from 'src/app/services/produtos.service';
-import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-produtos-page',
@@ -14,26 +13,18 @@ export class ProdutosPageComponent implements OnInit {
 
   closeModal: any;
 
-  createProduto = new FormGroup( {
-
+  createProduto = new FormGroup({
     nome: new FormControl('', [Validators.required]),
     quantidade: new FormControl('', [Validators.required]),
-    valor: new FormControl('', [Validators.required])
-
+    valor: new FormControl('', [Validators.required]),
   });
 
-  deletarProduto = new FormGroup({
+  infoDeleteProduto: any;
 
-    id:new FormControl(),
-    nome: new FormControl(),
-    quantidade: new FormControl(),
-    valor: new FormControl()
-
-  });
-
-
-  constructor(private produtosService: ProdutosService,
-              private modalService: NgbModal) {}
+  constructor(
+    private produtosService: ProdutosService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.pegarProdutos();
@@ -41,50 +32,40 @@ export class ProdutosPageComponent implements OnInit {
 
   pegarProdutos() {
     this.produtosService.pegarProdutos().subscribe((resultado) => {
-       this.listaDeProdutos = resultado;
+      this.listaDeProdutos = resultado;
     });
   }
 
   pegarProdutoPorId(id: any) {
-    this.produtosService.pegarProdutoPorId(id).subscribe((resultado) => {
-       });
+    this.produtosService.pegarProdutoPorId(id).subscribe((resultado) => {});
   }
 
-  postCreateProduto(){
-    this.produtosService.postCreateProduto(this.createProduto.value).subscribe((resultado) => {
-      this.pegarProdutos();
-      this.modalService.dismissAll();
-      this.createProduto = new FormGroup( {
-             nome: new FormControl('', [Validators.required]),
-             quantidade: new FormControl('', [Validators.required]),
-             valor: new FormControl('', [Validators.required])
+  postCreateProduto() {
+    this.produtosService
+      .postCreateProduto(this.createProduto.value)
+      .subscribe((resultado) => {
+        this.pegarProdutos();
+        this.modalService.dismissAll();
+        this.createProduto = new FormGroup({
+          nome: new FormControl('', [Validators.required]),
+          quantidade: new FormControl('', [Validators.required]),
+          valor: new FormControl('', [Validators.required]),
+        });
       });
+  }
 
-    })
+  deleteProduto(item: any, modalDeletarProduto: any) {
+    this.infoDeleteProduto = item;
+    console.log('Dados do produto: ', this.infoDeleteProduto);
+    this.triggerModal(modalDeletarProduto);
 
   }
 
-
-  // deleteProduto(){
-  //   this.produtosService.deleteProduto(this.deletarProduto.value).subscribe((resultado) => {
-  //     console.log('Retorno da API deletarProduto:', resultado );
-  //     this.pegarProdutos();
-  //     this.deletarProduto = new FormGroup( {
-  //            id: new FormControl(),
-  //            nome: new FormControl(),
-  //            quantidade: new FormControl(),
-  //            valor: new FormControl()
-  //     });
-  //   })
-
-  // }
-
-  deleteProduto(item:any){
-    console.log('Dados do produto: ', item);
-    this.produtosService.deleteProduto(item).subscribe((resultado) => {
-      this.pegarProdutos();
-    })
-
+  deleteconfirmado(){
+      this.produtosService.deleteProduto(this.infoDeleteProduto).subscribe((resultado) => {
+        this.pegarProdutos();
+        this.modalService.dismissAll();
+      })
   }
 
 
@@ -93,12 +74,18 @@ export class ProdutosPageComponent implements OnInit {
 
 
 
-  triggerModal(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((res) => {
-      this.closeModal = `Closed with: ${res}`;
-    }, (res) => {
-      this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
-    });
+
+  triggerModal(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (res) => {
+          this.closeModal = `Closed with: ${res}`;
+        },
+        (res) => {
+          this.closeModal = `Dismissed ${this.getDismissReason(res)}`;
+        }
+      );
   }
 
   private getDismissReason(reason: any): string {
@@ -107,7 +94,7 @@ export class ProdutosPageComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 }
