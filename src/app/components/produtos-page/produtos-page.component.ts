@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProdutosService } from 'src/app/services/produtos.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-produtos-page',
@@ -46,11 +47,24 @@ export class ProdutosPageComponent implements OnInit {
       .subscribe((resultado) => {
         this.pegarProdutos();
         this.modalService.dismissAll();
+
+
+        Swal.fire({
+          icon: 'success',
+          title: 'O produto '+this.createProduto.value.nome+' foi criado com sucesso!',
+          showConfirmButton: false,
+          timer: 2000
+        })
+
+
         this.createProduto = new FormGroup({
           nome: new FormControl('', [Validators.required]),
           quantidade: new FormControl('', [Validators.required]),
           valor: new FormControl('', [Validators.required]),
         });
+
+
+
       });
   }
 
