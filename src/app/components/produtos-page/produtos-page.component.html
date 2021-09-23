@@ -9,7 +9,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <button class="btn btn-info" (click)="triggerModal(modalData)">Novo Produto</button>
+          <button class="btn btn-info" (click)="triggerModal(modalData)">Novo Produto <span class="material-icons">
+            add_circle_outline
+            </span></button>
         </li>
         </ul>
         </div>
@@ -34,8 +36,11 @@
       <td> {{item.quantidade}}</td>
       <td> {{item.valor}}</td>
       <td>
-        <button type="button" class="btn btn-primary">Editar</button> &nbsp;
-        <button type="button" class="btn btn-danger" (click)="deleteProduto(item, modalDeletarProduto)">Excluir</button> <!-- item.id  -->
+        <button type="button" class="btn btn-primary"><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>
+        </button> &nbsp;
+        <button type="button" class="btn btn-danger" (click)="deleteProduto(item, modalDeletarProduto)"><span class="material-icons">
+          delete_forever
+          </span></button> <!-- item.id  -->
      </td>
       </tr>
 

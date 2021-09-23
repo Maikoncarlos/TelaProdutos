@@ -9,6 +9,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from './components/alert/alert.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {  MatIconModule } from '@angular/material/icon';
+
 
 
 
@@ -25,7 +28,9 @@ import { AlertComponent } from './components/alert/alert.component';
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatIconModule
   ],
 
   providers: [],
