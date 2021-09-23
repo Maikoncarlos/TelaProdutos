@@ -11,6 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class ProdutosPageComponent implements OnInit {
   listaDeProdutos: any;
+
   closeModal: any;
 
   createProduto = new FormGroup( {
@@ -18,6 +19,15 @@ export class ProdutosPageComponent implements OnInit {
     nome: new FormControl('', [Validators.required]),
     quantidade: new FormControl('', [Validators.required]),
     valor: new FormControl('', [Validators.required])
+
+  });
+
+  deletarProduto = new FormGroup({
+
+    id:new FormControl(),
+    nome: new FormControl(),
+    quantidade: new FormControl(),
+    valor: new FormControl()
 
   });
 
@@ -31,32 +41,53 @@ export class ProdutosPageComponent implements OnInit {
 
   pegarProdutos() {
     this.produtosService.pegarProdutos().subscribe((resultado) => {
-      this.listaDeProdutos = resultado;
+       this.listaDeProdutos = resultado;
     });
   }
 
   pegarProdutoPorId(id: any) {
     this.produtosService.pegarProdutoPorId(id).subscribe((resultado) => {
-      console.log('resultado da API :', resultado);
-    });
+       });
   }
 
   postCreateProduto(){
     this.produtosService.postCreateProduto(this.createProduto.value).subscribe((resultado) => {
-      console.log('Retorno da API :', resultado );
       this.pegarProdutos();
       this.modalService.dismissAll();
       this.createProduto = new FormGroup( {
-
-        nome: new FormControl('', [Validators.required]),
-        quantidade: new FormControl('', [Validators.required]),
-        valor: new FormControl('', [Validators.required])
-
+             nome: new FormControl('', [Validators.required]),
+             quantidade: new FormControl('', [Validators.required]),
+             valor: new FormControl('', [Validators.required])
       });
 
     })
 
   }
+
+
+  // deleteProduto(){
+  //   this.produtosService.deleteProduto(this.deletarProduto.value).subscribe((resultado) => {
+  //     console.log('Retorno da API deletarProduto:', resultado );
+  //     this.pegarProdutos();
+  //     this.deletarProduto = new FormGroup( {
+  //            id: new FormControl(),
+  //            nome: new FormControl(),
+  //            quantidade: new FormControl(),
+  //            valor: new FormControl()
+  //     });
+  //   })
+
+  // }
+
+  deleteProduto(item:any){
+    console.log('Dados do produto: ', item);
+    this.produtosService.deleteProduto(item).subscribe((resultado) => {
+      this.pegarProdutos();
+    })
+
+  }
+
+
 
 
 
