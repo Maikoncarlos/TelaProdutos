@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertComponent } from '../alert/alert.component';
 
 
+
 @Component({
   selector: 'app-produtos-page',
   templateUrl: './produtos-page.component.html',
@@ -21,7 +22,7 @@ export class ProdutosPageComponent implements OnInit {
     valor: new FormControl('', [Validators.required]),
   });
 
-  infoDeleteProduto: any;
+    infoProduto: any;
 
   constructor(
     private produtosService: ProdutosService,
@@ -45,7 +46,7 @@ export class ProdutosPageComponent implements OnInit {
 
   postCreateProduto() {
     this.produtosService
-      .postCreateProduto(this.createProduto.value)
+      .createProduto(this.createProduto.value)
       .subscribe((resultado) => {
         this.pegarProdutos();
         this.modalService.dismissAll();
@@ -57,26 +58,45 @@ export class ProdutosPageComponent implements OnInit {
           quantidade: new FormControl('', [Validators.required]),
           valor: new FormControl('', [Validators.required]),
         });
-
-
-
       });
   }
 
   deleteProduto(item: any, modalDeletarProduto: any) {
-    this.infoDeleteProduto = item;
-    console.log('Dados do produto: ', this.infoDeleteProduto);
+    this.infoProduto = item;
     this.triggerModal(modalDeletarProduto);
 
   }
 
-  deleteconfirmado(){
-      this.produtosService.deleteProduto(this.infoDeleteProduto).subscribe((resultado) => {
+  deleteConfirmado(){
+      this.produtosService.deleteProduto(this.infoProduto).subscribe((resultado) => {
         this.pegarProdutos();
         this.modalService.dismissAll();
-        this.alertComponent.alertTimer('success', 'O produto '+this.infoDeleteProduto.nome+' foi deletado com sucesso!' );
-      })
+        this.alertComponent.alertTimer('success', 'O produto '+this.infoProduto.nome+' foi deletado com sucesso!' );
+      });
   }
+
+  editarProduto(item: any, modalEditarProduto: any){
+    this.infoProduto = item;
+    console.log('Editar Dados :' , this.infoProduto);
+    this.triggerModal(modalEditarProduto);
+
+  }
+
+     editarConfirmado(nome:any, quantidade:any, valor:any){
+       const obj={
+        "id": this.infoProduto.id,
+        "nome": nome,
+        "quantidade": quantidade,
+        "valor": valor
+    }
+    this.produtosService.editarProuto(obj).subscribe((resultado) => {
+      this.pegarProdutos();
+      this.modalService.dismissAll();
+      this.alertComponent.alertTimer('success', 'O produto '+ nome +' foi atualizado com sucesso!' );
+   });
+  }
+
+
 
 
 

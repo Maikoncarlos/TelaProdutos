@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <button class="btn btn-info" (click)="triggerModal(modalData)">Novo Produto <span class="material-icons">
+          <button class="btn btn-info" (click)="triggerModal(modalData)"> Novo Produto <span class="material-icons">
             add_circle_outline
             </span></button>
         </li>
@@ -36,11 +36,10 @@
       <td> {{item.quantidade}}</td>
       <td> {{item.valor}}</td>
       <td>
-        <button type="button" class="btn btn-primary"><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon>
-        </button> &nbsp;
-        <button type="button" class="btn btn-danger" (click)="deleteProduto(item, modalDeletarProduto)"><span class="material-icons">
-          delete_forever
-          </span></button> <!-- item.id  -->
+        <button type="button" class="btn btn-primary"(click)="editarProduto(item, modalEditarProduto)">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button> &nbsp;
+        <button type="button" class="btn btn-danger" (click)="deleteProduto(item, modalDeletarProduto)">
+          <span class="material-icons">delete_forever</span></button> <!-- item.id  -->
      </td>
       </tr>
 
@@ -53,7 +52,7 @@
 <ng-template #modalData let-modal>
 
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Formulário de Novo Produto</h4>
+    <h4 class="modal-title" id="modal-basic-title">Formulário Produto</h4>
   </div>
 
 
@@ -87,6 +86,45 @@
 </ng-template>
 
 
+<!-- formulario para editar produto -->
+
+<ng-template #modalEditarProduto let-modal>
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Formulário de Produto</h4>
+  </div>
+
+
+  <div class="modal-body">
+    <form >
+
+      <div class="mb-3">
+        <label class="form-label">Nome:</label>
+        <input type="text" class="form-control" value="{{infoProduto.nome}}" #nome >
+        <!-- <div class="form-text">We'll never share your email with anyone else.</div> -->
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Quantidade:</label>
+        <input type="number" class="form-control" value="{{infoProduto.quantidade}}" #quantidade >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Valor:</label>
+        <input type="text" class="form-control" value="{{infoProduto.valor}}" #valor >
+      </div>
+
+
+       <button (click)="editarConfirmado(nome.value, quantidade.value, valor.value)"   >Salvar</button>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')"> Fechar </button>
+  </div>
+</ng-template>
+
+
 
 
 <!-- deletar produto -->
@@ -99,11 +137,11 @@
 
 
   <div class="modal-body">
-    <h4 class="modal-title" id="modal-basic-title">Realmente deseja excluir: {{infoDeleteProduto.nome}} ?</h4>
+    <h4 class="modal-title" id="modal-basic-title">Realmente deseja excluir: {{infoProduto.nome}} ?</h4>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="deleteconfirmado()"> Sim </button>
+    <button type="button" class="btn btn-danger" (click)="deleteConfirmado()"> Sim </button>
     <button type="button" class="btn btn-info" (click)="modal.close('Save click')"> Não </button>
   </div>
 </ng-template>

@@ -8,7 +8,7 @@ export class ProdutosService {
 
   constructor( private httpClient:HttpClient ) { }
 
-  pegarProdutos(){
+    pegarProdutos(){
     return this.httpClient.get('http://localhost:8080/api/produtos');
    }
 
@@ -16,12 +16,16 @@ export class ProdutosService {
     return this.httpClient.get('http://localhost:8080/api/produto/'+id);
    }
 
-   postCreateProduto(data:any){
+   createProduto(data:any){
     return this.httpClient.post('http://localhost:8080/api/produto',data);
    }
 
    deleteProduto(data:any){
      return this.httpClient.post('http://localhost:8080/api/produto-delete',data);
+   }
+
+   editarProuto(data:any){
+    return this.httpClient.put('http://localhost:8080/api/produto',data);
    }
 
 }
