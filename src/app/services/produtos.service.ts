@@ -21,7 +21,7 @@ export class ProdutosService {
    }
 
    deleteProduto(data:any){
-     return this.httpClient.post('http://localhost:8080/api/produto-delete',data);
+     return this.httpClient.delete('http://localhost:8080/api/produto-delete',data);
    }
 
    editarProuto(data:any){

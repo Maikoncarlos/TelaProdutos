@@ -1,22 +1,38 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand">Produtos</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-     aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
-    </button> &nbsp;
+    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <button class="btn btn-info" (click)="triggerModal(modalData)"> Novo Produto <span class="material-icons">
-            add_circle_outline
-            </span></button>
-        </li>
-        </ul>
-        </div>
-      </div>
-    </nav>
+        <button class="btn btn-info btn-sm" (click)="triggerModal(modalData)">
+          <span class="material-icons"> add_circle_outline </span> Cadastrar
+          Produto
+        </button>
+      </ul>
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Buscar"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit" >
+          <span class="material-icons">search</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
 
 <div class="table-list">
   <table class="table">
@@ -31,18 +47,32 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of listaDeProdutos">
-      <td> {{item.id}}</td>
-      <td> {{item.nome}}</td>
-      <td> {{item.quantidade}}</td>
-      <td> {{item.valor}}</td>
-      <td>
-        <button type="button" class="btn btn-primary"(click)="editarProduto(item, modalEditarProduto)">
-          <mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button> &nbsp;
-        <button type="button" class="btn btn-danger" (click)="deleteProduto(item, modalDeletarProduto)">
-          <span class="material-icons">delete_forever</span></button> <!-- item.id  -->
-     </td>
-      </tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.nome }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td>{{ item.valor }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            (click)="editarProduto(item, modalEditarProduto)"
+          >
+            <mat-icon aria-hidden="false"
+              >edit</mat-icon
+            >
+          </button>
+          &nbsp;
 
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="deleteProduto(item, modalDeletarProduto)"
+          >
+            <span class="material-icons">delete_forever</span>
+          </button>
+          <!-- item.id  -->
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -50,100 +80,135 @@
 <!-- formulario para criar produto -->
 
 <ng-template #modalData let-modal>
-
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Formulário Produto</h4>
   </div>
 
-
   <div class="modal-body">
-    <form [formGroup]="createProduto"  (ngSubmit)="postCreateProduto()" >
-
+    <form [formGroup]="createProduto" (ngSubmit)="postCreateProduto()">
       <div class="mb-3">
         <label class="form-label">Nome:</label>
-        <input type="text" class="form-control" formControlName="nome">
+        <input type="text" class="form-control" formControlName="nome" />
         <!-- <div class="form-text">We'll never share your email with anyone else.</div> -->
       </div>
 
       <div class="mb-3">
         <label class="form-label">Quantidade:</label>
-        <input type="number" class="form-control"  formControlName="quantidade">
+        <input
+          type="number"
+          class="form-control"
+          formControlName="quantidade"
+        />
       </div>
 
       <div class="mb-3">
         <label class="form-label">Valor:</label>
-        <input type="text" class="form-control"  formControlName="valor">
+        <input type="text" class="form-control" formControlName="valor" />
       </div>
 
-
-      <button type="submit" [disabled]='createProduto.invalid' class="btn btn-primary">Salvar</button>
+      <button
+        type="submit"
+        [disabled]="createProduto.invalid"
+        class="btn btn-primary"
+      >
+        Salvar
+      </button>
     </form>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')"> Fechar </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal.close('Save click')"
+    >
+      Fechar
+    </button>
   </div>
 </ng-template>
-
 
 <!-- formulario para editar produto -->
 
 <ng-template #modalEditarProduto let-modal>
-
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Formulário de Produto</h4>
   </div>
 
-
   <div class="modal-body">
-    <form >
-
+    <form>
       <div class="mb-3">
         <label class="form-label">Nome:</label>
-        <input type="text" class="form-control" value="{{infoProduto.nome}}" #nome >
+        <input
+          type="text"
+          class="form-control"
+          value="{{ infoProduto.nome }}"
+          #nome
+        />
         <!-- <div class="form-text">We'll never share your email with anyone else.</div> -->
       </div>
 
       <div class="mb-3">
         <label class="form-label">Quantidade:</label>
-        <input type="number" class="form-control" value="{{infoProduto.quantidade}}" #quantidade >
+        <input
+          type="number"
+          class="form-control"
+          value="{{ infoProduto.quantidade }}"
+          #quantidade
+        />
       </div>
 
       <div class="mb-3">
         <label class="form-label">Valor:</label>
-        <input type="text" class="form-control" value="{{infoProduto.valor}}" #valor >
+        <input
+          type="text"
+          class="form-control"
+          value="{{ infoProduto.valor }}"
+          #valor
+        />
       </div>
 
-
-       <button (click)="editarConfirmado(nome.value, quantidade.value, valor.value)"   >Salvar</button>
+      <button
+        (click)="editarConfirmado(nome.value, quantidade.value, valor.value)"
+      >
+        Salvar
+      </button>
     </form>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="modal.close('Save click')"> Fechar </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal.close('Save click')"
+    >
+      Fechar
+    </button>
   </div>
 </ng-template>
-
-
-
 
 <!-- deletar produto -->
 
 <ng-template #modalDeletarProduto let-modal>
-
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Atenção!!!</h4>
   </div>
 
-
   <div class="modal-body">
-    <h4 class="modal-title" id="modal-basic-title">Realmente deseja excluir: {{infoProduto.nome}} ?</h4>
+    <h4 class="modal-title" id="modal-basic-title">
+      Realmente deseja excluir: {{ infoProduto.nome }} ?
+    </h4>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="deleteConfirmado()"> Sim </button>
-    <button type="button" class="btn btn-info" (click)="modal.close('Save click')"> Não </button>
+    <button type="button" class="btn btn-danger" (click)="deleteConfirmado()">
+      Sim
+    </button>
+    <button
+      type="button"
+      class="btn btn-info"
+      (click)="modal.close('Save click')"
+    >
+      Não
+    </button>
   </div>
 </ng-template>
-
-

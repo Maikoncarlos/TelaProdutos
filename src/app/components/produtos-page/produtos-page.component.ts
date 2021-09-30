@@ -13,6 +13,7 @@ import { AlertComponent } from '../alert/alert.component';
 })
 export class ProdutosPageComponent implements OnInit {
   listaDeProdutos: any;
+  listaProduto: any;
 
   closeModal: any;
 
@@ -41,7 +42,9 @@ export class ProdutosPageComponent implements OnInit {
   }
 
   pegarProdutoPorId(id: any) {
-    this.produtosService.pegarProdutoPorId(id).subscribe((resultado) => {});
+    this.produtosService.pegarProdutoPorId(id).subscribe((resultado) => {
+        this.listaProduto = resultado;
+    });
   }
 
   postCreateProduto() {
