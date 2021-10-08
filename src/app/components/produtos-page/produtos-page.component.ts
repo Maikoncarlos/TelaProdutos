@@ -1,10 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ProdutosService } from 'src/app/services/produtos.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertComponent } from '../alert/alert.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
-
+@Pipe({ name: 'safe' })
+export class SafePipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) {}
+  transform(url: any) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+}
 
 @Component({
   selector: 'app-produtos-page',
@@ -13,6 +20,7 @@ import { AlertComponent } from '../alert/alert.component';
 })
 export class ProdutosPageComponent implements OnInit {
   listaDeProdutos: any;
+  filterPost='';
   listaProduto: any;
 
   closeModal: any;
@@ -23,7 +31,7 @@ export class ProdutosPageComponent implements OnInit {
     valor: new FormControl('', [Validators.required]),
   });
 
-    infoProduto: any;
+  infoProduto: any;
 
   constructor(
     private produtosService: ProdutosService,
@@ -37,13 +45,14 @@ export class ProdutosPageComponent implements OnInit {
 
   pegarProdutos() {
     this.produtosService.pegarProdutos().subscribe((resultado) => {
+      console.log("chegou aqui"+resultado)
       this.listaDeProdutos = resultado;
     });
   }
 
   pegarProdutoPorId(id: any) {
     this.produtosService.pegarProdutoPorId(id).subscribe((resultado) => {
-        this.listaProduto = resultado;
+      this.listaProduto = resultado;
     });
   }
 
@@ -54,7 +63,12 @@ export class ProdutosPageComponent implements OnInit {
         this.pegarProdutos();
         this.modalService.dismissAll();
 
-        this.alertComponent.alertTimer('success', 'O produto '+this.createProduto.value.nome+' foi criado com sucesso!' );
+        this.alertComponent.alertTimer(
+          'success',
+          'O produto ' +
+            this.createProduto.value.nome +
+            ' foi criado com sucesso!'
+        );
 
         this.createProduto = new FormGroup({
           nome: new FormControl('', [Validators.required]),
@@ -64,49 +78,46 @@ export class ProdutosPageComponent implements OnInit {
       });
   }
 
-  deleteProduto(item: any, modalDeletarProduto: any) {
-    this.infoProduto = item;
+  deleteProduto(id: any, modalDeletarProduto: any) {
+    this.infoProduto = id;
     this.triggerModal(modalDeletarProduto);
-
   }
 
-  deleteConfirmado(){
-      this.produtosService.deleteProduto(this.infoProduto).subscribe((resultado) => {
+  deleteConfirmado() {
+    this.produtosService
+      .deleteProduto(this.infoProduto)
+      .subscribe((resultado) => {
         this.pegarProdutos();
         this.modalService.dismissAll();
-        this.alertComponent.alertTimer('success', 'O produto '+this.infoProduto.nome+' foi deletado com sucesso!' );
+        this.alertComponent.alertTimer(
+          'success',
+          'O produto ' + this.infoProduto.nome + ' foi deletado com sucesso!'
+        );
       });
   }
 
-  editarProduto(item: any, modalEditarProduto: any){
+  editarProduto(item: any, modalEditarProduto: any) {
     this.infoProduto = item;
-    console.log('Editar Dados :' , this.infoProduto);
+    console.log('Editar Dados :', this.infoProduto);
     this.triggerModal(modalEditarProduto);
-
   }
 
-     editarConfirmado(nome:any, quantidade:any, valor:any){
-       const obj={
-        "id": this.infoProduto.id,
-        "nome": nome,
-        "quantidade": quantidade,
-        "valor": valor
-    }
+  editarConfirmado(nome: any, quantidade: any, valor: any) {
+    const obj = {
+      id: this.infoProduto.id,
+      nome: nome,
+      quantidade: quantidade,
+      valor: valor,
+    };
     this.produtosService.editarProuto(obj).subscribe((resultado) => {
       this.pegarProdutos();
       this.modalService.dismissAll();
-      this.alertComponent.alertTimer('success', 'O produto '+ nome +' foi atualizado com sucesso!' );
-   });
+      this.alertComponent.alertTimer(
+        'success',
+        'O produto ' + nome + ' foi atualizado com sucesso!'
+      );
+    });
   }
-
-
-
-
-
-
-
-
-
 
   triggerModal(content: any) {
     this.modalService

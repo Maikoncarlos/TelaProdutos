@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { AlertComponent } from './components/alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  MatIconModule } from '@angular/material/icon';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 
@@ -19,7 +20,8 @@ import {  MatIconModule } from '@angular/material/icon';
   declarations: [
     AppComponent,
     ProdutosPageComponent,
-    AlertComponent
+    AlertComponent,
+    FilterPipe
   ],
 
   imports: [

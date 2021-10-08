@@ -20,8 +20,8 @@ export class ProdutosService {
     return this.httpClient.post('http://localhost:8080/api/produto',data);
    }
 
-   deleteProduto(data:any){
-     return this.httpClient.delete('http://localhost:8080/api/produto-delete',data);
+   deleteProduto(id:any){
+     return this.httpClient.post('http://localhost:8080/api/produto-delete'+id, '');
    }
 
    editarProuto(data:any){
