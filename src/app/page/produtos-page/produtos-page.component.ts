@@ -2,7 +2,7 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ProdutosService } from 'src/app/services/produtos.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertComponent } from '../alert/alert.component';
+import { AlertComponent } from  '../../components/alert/alert.component';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({ name: 'safe' })
