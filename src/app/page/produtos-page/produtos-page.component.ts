@@ -85,7 +85,7 @@ export class ProdutosPageComponent implements OnInit {
 
   deleteConfirmado() {
     this.produtosService
-      .deleteProduto(this.infoProduto)
+      .deleteProduto(this.infoProduto.id)
       .subscribe((resultado) => {
         this.pegarProdutos();
         this.modalService.dismissAll();

@@ -1,4 +1,10 @@
 
+.table-area{
+  background: rgb(155, 150, 150);
+  height: 90%;
+  overflow: scroll;
+  }
+
 .table-list{
   background: rgb(228, 222, 222);
   width: auto;
@@ -13,4 +19,26 @@
 .table tbody tr:hover{
   background: rgb(153, 145, 145);
   color: white;
+}
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

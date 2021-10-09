@@ -12,7 +12,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  MatIconModule } from '@angular/material/icon';
 import { FilterPipe } from './pipes/filter.pipe';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginPageComponent } from './page/login-page/login-page.component';
 
 
 
