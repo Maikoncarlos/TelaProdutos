@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class= "navbar navbar-dark bg-dark navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">PRODUTO</a>
-    <button
+    <a class="navbar-brand"> PRODUTO </a>
+      <button
       class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
@@ -15,112 +15,111 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <button class="btn btn-info btn-sm" (click)="triggerModal(modalData)">
+          <button class="btn btn-secondary btn-sm" (click)="triggerModal(modalData)">
             <span class="material-icons"> add_circle_outline </span> Cadastrar
             Produto
           </button>
         </li>
       </ul>
       <div class="collapse navbar-collapse" id="navbarNav"></div>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <input
-              class="form-control me-2"
-              type="text"
-              placeholder="Buscar"
-              aria-label="Search"
-              [(ngModel)]="filterPost"
-              #dataSearch
-            />
-          </li>
-        </ul>
-      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <input
+            class="form-control me-2"
+            type="text"
+            placeholder="Buscar"
+            aria-label="Search"
+            [(ngModel)]="filterPost"
+            #dataSearch
+          />
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
 
-
-
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <input
-              class="form-control me-2"
-              type="text"
-              placeholder="Buscar"
-              aria-label="Search"
-              [(ngModel)]="filterPost"
-              #dataSearch
-            />
-          </li>
-        </ul>
-      </div>
-
+<div class="collapse navbar-collapse" id="navbarNav">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <input
+        class="form-control me-2"
+        type="text"
+        placeholder="Buscar"
+        aria-label="Search"
+        [(ngModel)]="filterPost"
+        #dataSearch
+      />
+    </li>
+  </ul>
+</div>
 
 <div class="table-area">
+  <div class="table-list">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome do Produto</th>
+          <th>Quantidade em Estoque</th>
+          <th>Valor Unitário</th>
+          <th>Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listaDeProdutos | filter: filterPost">
+          <td>{{ item.nome }}</td>
+          <td>{{ item.quantidade }}</td>
+          <td>{{ item.valor | currency: "BRL":"symbol" }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              title="Editar"
+              (click)="editarProduto(item, modalEditarProduto)"
+            >
+              <mat-icon aria-hidden="false">edit</mat-icon>
+            </button>
+            &nbsp;
 
-
-<div class="table-list">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Nome</th>
-        <th>Quantidade</th>
-        <th>Valor</th>
-        <th>Opções</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of listaDeProdutos | filter: filterPost">
-        <td>{{ item.id }}</td>
-        <td>{{ item.nome }}</td>
-        <td>{{ item.quantidade }}</td>
-        <td>{{ item.valor | currency: "BRL":"symbol" }}</td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-outline-primary"
-            title="Editar"
-            (click)="editarProduto(item, modalEditarProduto)"
-          >
-            <mat-icon aria-hidden="false">edit</mat-icon>
-          </button>
-          &nbsp;
-
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            title="Excluir"
-            (click)="deleteProduto(item, modalDeletarProduto)"
-          >
-            <span class="material-icons">delete_forever</span>
-          </button>
-          <!-- item.id  -->
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              title="Excluir"
+              (click)="deleteProduto(item, modalDeletarProduto)"
+            >
+              <span class="material-icons">delete_forever</span>
+            </button>
+            <!-- item.id  -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <!-- formulario para criar produto -->
 
 <ng-template #modalData let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Formulário Produto</h4>
+    <h3 class="modal-title">Cadastrar Produto</h3>
+
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.close('Save click')"
+    ></button>
   </div>
 
   <div class="modal-body">
     <form [formGroup]="createProduto" (ngSubmit)="postCreateProduto()">
       <div class="mb-3">
-        <label class="form-label">Nome:</label>
+        <label class="form-label">Nome do Produto:</label>
         <input type="text" class="form-control" formControlName="nome" />
-        <!-- <div class="form-text">We'll never share your email with anyone else.</div> -->
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Quantidade:</label>
+        <label class="form-label">Quantidade em Estoque:</label>
         <input
           type="number"
           class="form-control"
@@ -129,7 +128,7 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Valor:</label>
+        <label class="form-label">Valor Unitário:</label>
         <input type="text" class="form-control" formControlName="valor" />
       </div>
 
@@ -142,40 +141,36 @@
       </button>
     </form>
   </div>
-
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-danger"
-      (click)="modal.close('Save click')"
-    >
-      Fechar
-    </button>
-  </div>
 </ng-template>
-
 <!-- formulario para editar produto -->
 
 <ng-template #modalEditarProduto let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Formulário de Produto</h4>
+    <h4 class="modal-title" id="modal-basic-title">Editar de Produto</h4>
+
+    <button
+      type="button"
+      class="btn btn-danger btn-sm"
+      (click)="modal.close('Save click')"
+    >
+      <span class="material-icons"> close </span>
+    </button>
   </div>
 
   <div class="modal-body">
     <form>
       <div class="mb-3">
-        <label class="form-label">Nome:</label>
+        <label class="form-label">Nome do Produto:</label>
         <input
           type="text"
           class="form-control"
           value="{{ infoProduto.nome }}"
           #nome
         />
-        <!-- <div class="form-text">We'll never share your email with anyone else.</div> -->
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Quantidade:</label>
+        <label class="form-label">Quantidade em Estoque:</label>
         <input
           type="number"
           class="form-control"
@@ -185,7 +180,7 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Valor:</label>
+        <label class="form-label">Valor Unitário:</label>
         <input
           type="text"
           class="form-control"
@@ -193,36 +188,26 @@
           #valor
         />
       </div>
-
       <button
         (click)="editarConfirmado(nome.value, quantidade.value, valor.value)"
+        class="btn btn-primary"
       >
         Salvar
       </button>
     </form>
   </div>
-
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-danger"
-      (click)="modal.close('Save click')"
-    >
-      Fechar
-    </button>
-  </div>
 </ng-template>
 
-<!-- deletar produto -->
+<!-- Modal deletar produto -->
 
 <ng-template #modalDeletarProduto let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Atenção!!!</h4>
+    <h3 class="modal-title" >Atenção!!!</h3>
   </div>
 
   <div class="modal-body">
-    <h4 class="modal-title" id="modal-basic-title">
-      Realmente deseja excluir: {{ infoProduto.nome }} ?
+    <h4 class="modal-title" >
+      Realmente deseja excluir o Produto: {{ infoProduto.nome }} ?
     </h4>
   </div>
 
@@ -233,8 +218,7 @@
     <button
       type="button"
       class="btn btn-info"
-      (click)="modal.close('Save click')"
-    >
+      (click)="modal.close('Save click')" >
       Não
     </button>
   </div>

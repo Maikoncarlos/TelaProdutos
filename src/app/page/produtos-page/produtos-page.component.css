@@ -1,8 +1,8 @@
 
 .table-area{
-  background: rgb(155, 150, 150);
-  height: 90%;
-  overflow: scroll;
+  background: rgb(207, 203, 203);
+  height: auto;
+  overflow: auto;
   }
 
 .table-list{
