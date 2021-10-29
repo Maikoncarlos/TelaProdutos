@@ -45,7 +45,6 @@ export class ProdutosPageComponent implements OnInit {
 
   pegarProdutos() {
     this.produtosService.pegarProdutos().subscribe((resultado) => {
-      console.log("chegou aqui"+resultado)
       this.listaDeProdutos = resultado;
     });
   }
